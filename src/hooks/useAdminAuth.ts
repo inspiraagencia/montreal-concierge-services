@@ -116,9 +116,9 @@ export function useAdminAuth(): UseAdminAuthReturn {
   return {
     user,
     loading,
-    isAdmin: user?.role === 'admin' ?? false,
-    isEditor: user?.role === 'editor' ?? false,
-    isViewer: user?.role === 'viewer' ?? false,
+    isAdmin: user?.role === 'admin' || false,
+    isEditor: user?.role === 'editor' || false,
+    isViewer: user?.role === 'viewer' || false,
     logout,
   };
 }

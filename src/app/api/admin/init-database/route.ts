@@ -119,7 +119,19 @@ export async function POST(request: NextRequest) {
     // Execute migrations
     for (const sql of migrations) {
       try {
-        const { error } = await supabase.rpc('exec_sql', { sql_str: sql }).catch(async () => {
+        try {
+          const { error } = await supabase.rpc('exec_sql', { sql_str: sql });
+          if (!error) {
+            successCount++;
+          } else if (error.message?.includes('already exists') || error.message?.includes('duplicate')) {
+            successCount++;
+          } else if (error.code === 'PGRST001') {
+            // Doesn't support this rpc call, that's ok
+            successCount++;
+          } else {
+            errors.push(error.message);
+          }
+        } catch {
           // Fallback: Try raw SQL approach
           const response = await fetch(`${supabaseUrl}/rest/v1/rpc/exec`, {
             method: 'POST',
@@ -134,19 +146,7 @@ export async function POST(request: NextRequest) {
           if (!response.ok && response.status !== 409 && response.status !== 400) {
             throw new Error(`HTTP ${response.status}`);
           }
-
-          return { error: null };
-        });
-
-        if (!error) {
           successCount++;
-        } else if (error.message?.includes('already exists') || error.message?.includes('duplicate')) {
-          successCount++;
-        } else if (error.code === 'PGRST001') {
-          // Doesn't support this rpc call, that's ok
-          successCount++;
-        } else {
-          errors.push(error.message);
         }
       } catch (e: any) {
         // Most migration errors are "already exists" which is fine

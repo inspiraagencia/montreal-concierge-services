@@ -24,7 +24,7 @@ function UsuariosContent() {
     email: '',
     full_name: '',
     password: '',
-    role: 'viewer' as const,
+    role: 'viewer' as 'admin' | 'editor' | 'viewer',
   });
   const supabase = createClient();
 

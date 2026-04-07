@@ -146,12 +146,18 @@ export default function AdminLoginPage() {
                 placeholder="admin@example.com"
                 required
                 disabled={loading}
-                className="w-full px-4 py-3 rounded-lg text-white transition-all duration-200 focus:outline-none disabled:opacity-50 focus:ring-2 focus:ring-offset-0"
+                className="w-full px-4 py-3 rounded-lg text-white transition-all duration-200 focus:outline-none disabled:opacity-50"
                 style={{
                   background: 'rgba(30, 41, 59, 0.8)',
                   border: '1px solid rgba(0, 192, 212, 0.4)',
                   color: '#f1f5f9',
-                  focusRingColor: 'rgba(0, 192, 212, 0.5)',
+                  boxShadow: 'inset 0 0 0 3px rgba(0, 192, 212, 0.3)',
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.boxShadow = 'inset 0 0 0 3px rgba(0, 192, 212, 0.5), 0 0 0 3px rgba(0, 192, 212, 0.3)';
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.boxShadow = 'inset 0 0 0 3px rgba(0, 192, 212, 0.3)';
                 }}
               />
             </div>

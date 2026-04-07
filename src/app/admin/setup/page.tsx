@@ -11,7 +11,7 @@ export default function AdminSetupPage() {
   const [migrationSql, setMigrationSql] = useState('');
   const [copiedToClipboard, setCopiedToClipboard] = useState(false);
   const router = useRouter();
-  const sqlRef = useRef<HTMLPreElement>(null);
+  const sqlRef = useRef<HTMLDivElement>(null);
 
   const handleSetup = async () => {
     setLoading(true);
