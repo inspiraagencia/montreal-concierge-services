@@ -95,17 +95,26 @@ export async function POST(request: NextRequest) {
       // Verify if tables exist
       const supabase = createClient(supabaseUrl, serviceRoleKey);
 
-      const { data: adminUsersCheck, error: error1 } = await supabase
-        .from('admin_users')
-        .select('count')
-        .limit(1)
-        .catch(() => ({ data: null, error: { message: 'Table not found' } }));
+      let error1: any = null;
+      let error2: any = null;
 
-      const { data: auditCheck, error: error2 } = await supabase
-        .from('audit_logs')
-        .select('count')
-        .limit(1)
-        .catch(() => ({ data: null, error: { message: 'Table not found' } }));
+      try {
+        await supabase
+          .from('admin_users')
+          .select('count')
+          .limit(1);
+      } catch (e) {
+        error1 = { message: 'Table not found' };
+      }
+
+      try {
+        await supabase
+          .from('audit_logs')
+          .select('count')
+          .limit(1);
+      } catch (e) {
+        error2 = { message: 'Table not found' };
+      }
 
       const adminUsersExists = !error1 || !error1.message.includes('does not exist');
       const auditLogsExists = !error2 || !error2.message.includes('does not exist');

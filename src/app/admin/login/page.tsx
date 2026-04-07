@@ -222,10 +222,19 @@ export default function AdminLoginPage() {
           </form>
 
           {/* Footer */}
-          <div className="mt-8 pt-6 border-t" style={{ borderColor: 'rgba(0, 192, 212, 0.2)' }}>
+          <div className="mt-8 pt-6 border-t space-y-3" style={{ borderColor: 'rgba(0, 192, 212, 0.2)' }}>
             <p className="text-center text-xs font-medium" style={{ color: '#94a3b8' }}>
               ¿Necesitas ayuda? Contacta al administrador del sistema
             </p>
+            <div className="text-center">
+              <a
+                href="/admin/setup-migrations"
+                className="text-xs font-medium transition-colors hover:text-cyan-400"
+                style={{ color: '#64748b' }}
+              >
+                📋 Configurar Base de Datos
+              </a>
+            </div>
           </div>
         </div>
 
