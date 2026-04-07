@@ -5,7 +5,7 @@ Professional concierge and commercial cleaning services for Montreal South Shore
 ## 🌐 Live Website
 
 **Production:** https://montreal-concierge-services.vercel.app
-
+**Status:** 🚀 Deploying to Vercel
 **Languages:** English 🇬🇧 | Français 🇫🇷
 
 ## 🚀 Tech Stack
