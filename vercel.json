@@ -1,4 +1,11 @@
 {
   "buildCommand": "npm run build",
-  "outputDirectory": ".next"
+  "outputDirectory": ".next",
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/:locale(en|fr)/:path*",
+      "destination": "/:locale/:path*"
+    }
+  ]
 }
