@@ -1,0 +1,147 @@
+{
+  "metadata": {
+    "title": "Services de Conciergerie Montréal | Nettoyage Commercial & Gestion de Propriété",
+    "description": "Services de conciergerie professionnels sur la Rive-Sud de Montréal. Nettoyage commercial, gestion Airbnb, entretien de propriété. Repentigny, Terrebonne, Longueuil. Obtenez votre soumission gratuite."
+  },
+  "nav": {
+    "home": "Accueil",
+    "services": "Services",
+    "about": "À propos",
+    "blog": "Blogue",
+    "contact": "Contact",
+    "getQuote": "Soumission gratuite",
+    "callUs": "Appelez-nous"
+  },
+  "hero": {
+    "title": "Services de Conciergerie Professionnels à Montréal",
+    "subtitle": "Nettoyage commercial, gestion Airbnb et entretien de propriété pour la Rive-Sud et le Grand Montréal.",
+    "cta": "Demander une soumission gratuite",
+    "ctaSecondary": "Nos services",
+    "trusted": "La confiance des entreprises de la Rive-Sud"
+  },
+  "services": {
+    "title": "Nos Services de Conciergerie",
+    "subtitle": "Des solutions complètes pour les entreprises, propriétaires et hôtes de location à court terme à Montréal.",
+    "commercial": {
+      "title": "Nettoyage Commercial",
+      "description": "Nettoyage professionnel de bureaux, entretien des planchers, lavage de vitres et désinfection des lieux de travail pour entreprises de toutes tailles."
+    },
+    "airbnb": {
+      "title": "Conciergerie Airbnb & Locative",
+      "description": "Accueil des locataires, gestion des clés, ménage professionnel, service de buanderie et panier de bienvenue pour locations à court terme."
+    },
+    "property": {
+      "title": "Gestion de Propriété",
+      "description": "Surveillance de propriété, coordination de maintenance, entretien paysager, déneigement et aide à la gestion de travaux."
+    },
+    "business": {
+      "title": "Conciergerie d'Entreprise",
+      "description": "Pressing, conciergerie de quartier et gestion de colis pour vos employés."
+    },
+    "dayporter": {
+      "title": "Conciergerie de Jour",
+      "description": "Services de conciergerie diurne incluant nettoyage des toilettes, vidage des poubelles, entretien des salles de pause et intervention d'urgence."
+    },
+    "viewAll": "Voir tous les services",
+    "learnMore": "En savoir plus"
+  },
+  "whyUs": {
+    "title": "Pourquoi Choisir Nos Services de Conciergerie?",
+    "items": {
+      "professional": {
+        "title": "Équipe Professionnelle",
+        "description": "Personnel formé, assuré et vérifié, dédié à l'excellence."
+      },
+      "flexible": {
+        "title": "Horaire Flexible",
+        "description": "Horaires de nettoyage quotidiens, hebdomadaires ou personnalisés selon vos besoins."
+      },
+      "eco": {
+        "title": "Produits Écoresponsables",
+        "description": "Nous utilisons des produits et méthodes de nettoyage respectueux de l'environnement."
+      },
+      "local": {
+        "title": "Couverture Rive-Sud",
+        "description": "Desservant Longueuil, Brossard, Repentigny, Terrebonne et toutes les communautés de la Rive-Sud."
+      }
+    }
+  },
+  "sectors": {
+    "title": "Secteurs que Nous Desservons",
+    "subtitle": "Des solutions de conciergerie adaptées à chaque secteur"
+  },
+  "cta": {
+    "title": "Prêt à Commencer?",
+    "subtitle": "Demandez votre soumission gratuite et sans engagement. Nous répondons en moins de 60 minutes.",
+    "button": "Obtenir Votre Soumission Gratuite",
+    "phone": "Ou Appelez-Nous Maintenant"
+  },
+  "contact": {
+    "title": "Contactez-Nous",
+    "subtitle": "Obtenez une soumission gratuite pour vos besoins en conciergerie.",
+    "form": {
+      "name": "Nom complet",
+      "email": "Adresse courriel",
+      "phone": "Numéro de téléphone",
+      "serviceType": "Type de service",
+      "selectService": "Sélectionnez un service...",
+      "description": "Décrivez vos besoins",
+      "descriptionPlaceholder": "Parlez-nous de votre espace, de la fréquence souhaitée et de tout besoin spécial...",
+      "budget": "Fourchette de budget",
+      "selectBudget": "Sélectionnez le budget...",
+      "urgency": "Quand avez-vous besoin de ce service?",
+      "selectUrgency": "Sélectionnez l'urgence...",
+      "location": "Emplacement",
+      "selectLocation": "Sélectionnez votre zone...",
+      "terms": "J'accepte la politique de confidentialité et les conditions d'utilisation",
+      "submit": "Envoyer la demande",
+      "sending": "Envoi en cours...",
+      "success": "Votre demande a été envoyée avec succès! Nous vous contacterons dans les 60 minutes.",
+      "error": "Une erreur est survenue. Veuillez réessayer ou nous appeler directement."
+    },
+    "budgetOptions": {
+      "under500": "Moins de 500$/mois",
+      "500to1000": "500$ - 1 000$/mois",
+      "1000to2500": "1 000$ - 2 500$/mois",
+      "2500to5000": "2 500$ - 5 000$/mois",
+      "over5000": "Plus de 5 000$/mois",
+      "custom": "Personnalisé / Service ponctuel"
+    },
+    "urgencyOptions": {
+      "asap": "Dès que possible",
+      "thisWeek": "Cette semaine",
+      "thisMonth": "Ce mois-ci",
+      "planning": "Simple planification"
+    }
+  },
+  "about": {
+    "title": "À Propos de Montreal Concierge Services | Nettoyage Commercial & Gestion de Propriété",
+    "description": "Découvrez Montreal Concierge Services - Plus de 10 ans de services de conciergerie, nettoyage commercial et gestion Airbnb professionnels à Montréal et Riviera Sud. 500+ clients satisfaits.",
+    "hero": {
+      "title": "À Propos de Montreal Concierge Services",
+      "subtitle": "Services de conciergerie professionnels et nettoyage commercial sur la Riviera Sud depuis 2014. Nous servons les entreprises, propriétaires et hôtes Airbnb avec excellence et fiabilité."
+    },
+    "story": {
+      "title": "Notre Histoire & Mission",
+      "paragraph1": "Fondée en 2014, Montreal Concierge Services a commencé avec une vision simple : fournir des solutions de conciergerie et de nettoyage de qualité professionnelle aux entreprises et propriétaires de la région Riviera Sud. Ce qui a commencé par une petite équipe est devenu le nom le plus fiable en nettoyage commercial et gestion de propriété sur la Rive-Sud de Montréal.",
+      "paragraph2": "Aujourd'hui, nous sommes fiers de servir plus de 500 clients satisfaits, des petits bureaux aux grands complexes commerciaux. Notre engagement envers l'excellence, la fiabilité et l'attention aux détails nous a fait le choix privilégié pour la gestion Airbnb, le nettoyage de bureaux et les services de propriété résidentielle à Montréal et dans les régions environnantes."
+    }
+  },
+  "blog": {
+    "title": "Blogue sur la Conciergerie",
+    "subtitle": "Conseils, guides et perspectives sur le nettoyage commercial, la gestion de propriété et l'hébergement Airbnb à Montréal.",
+    "readMore": "Lire la suite",
+    "categories": "Catégories",
+    "recentPosts": "Articles récents"
+  },
+  "footer": {
+    "description": "Services de conciergerie professionnels pour entreprises, propriétaires et hôtes de location dans le Grand Montréal.",
+    "quickLinks": "Liens rapides",
+    "ourServices": "Nos services",
+    "serviceAreas": "Zones desservies",
+    "contactInfo": "Coordonnées",
+    "copyright": "Tous droits réservés.",
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation"
+  }
+}

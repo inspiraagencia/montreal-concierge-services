@@ -1,0 +1,44 @@
+{
+  "project": "Montreal Concierge Services",
+  "version": "1.0.0",
+  "skills": [
+    {
+      "name": "copywriter",
+      "description": "Especialista en redacción, copywriting SEO y contenidos para web",
+      "version": "1.0.0",
+      "path": "./.claude/skills/copywriter.md",
+      "enabled": true,
+      "tags": ["copywriting", "seo", "content", "redaction", "marketing"],
+      "usage": "Redacción de contenidos optimizados para SEO, copywriting persuasivo, contenidos multiidioma"
+    },
+    {
+      "name": "seo-optimizer",
+      "description": "Optimización SEO para páginas web",
+      "version": "1.0.0",
+      "enabled": true,
+      "tags": ["seo", "optimization", "keywords", "metadata"],
+      "usage": "Análisis SEO, keywords research, meta descriptions, structured data"
+    },
+    {
+      "name": "humanizer",
+      "description": "Personalización v2.5.1 de contenidos",
+      "version": "2.5.1",
+      "enabled": true,
+      "tags": ["personalization", "content", "localization"],
+      "usage": "Adaptación de contenidos a audiencia local, tono natural"
+    }
+  ],
+  "inComingProjects": [
+    "frontend-design",
+    "feature-dev",
+    "code-review",
+    "typescript-lsp",
+    "commit-commands",
+    "skill-creator",
+    "code-simplifier",
+    "pr-review-toolkit",
+    "security-guidance"
+  ],
+  "lastUpdated": "2026-04-06",
+  "notes": "Skill de copywriter agregado como fundación para redacción SEO y contenidos. Diseñado específicamente para Montreal Concierge Services."
+}

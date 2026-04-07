@@ -1,0 +1,147 @@
+{
+  "metadata": {
+    "title": "Montreal Concierge Services | Professional Cleaning & Property Management",
+    "description": "Professional concierge services in Montreal South Shore. Commercial cleaning, Airbnb management, property maintenance. Serving Repentigny, Terrebonne, Longueuil. Get your free quote today."
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "about": "About",
+    "blog": "Blog",
+    "contact": "Contact",
+    "getQuote": "Get a Free Quote",
+    "callUs": "Call Us"
+  },
+  "hero": {
+    "title": "Professional Concierge Services in Montreal",
+    "subtitle": "Commercial cleaning, Airbnb management, and property maintenance for the South Shore and Greater Montreal area.",
+    "cta": "Request a Free Quote",
+    "ctaSecondary": "Our Services",
+    "trusted": "Trusted by businesses across the South Shore"
+  },
+  "services": {
+    "title": "Our Concierge Services",
+    "subtitle": "Complete solutions for businesses, property owners, and short-term rental hosts in Montreal.",
+    "commercial": {
+      "title": "Commercial Cleaning",
+      "description": "Professional office cleaning, floor maintenance, window washing, and workplace disinfection for businesses of all sizes."
+    },
+    "airbnb": {
+      "title": "Airbnb & Rental Concierge",
+      "description": "Guest check-in, key management, professional turnover cleaning, laundry service, and welcome baskets for short-term rentals."
+    },
+    "property": {
+      "title": "Property Management Support",
+      "description": "Property monitoring, maintenance coordination, landscaping, snow removal, and renovation support."
+    },
+    "business": {
+      "title": "Business Concierge",
+      "description": "Dry-cleaning, neighborhood concierge assistance, and parcel management services for your employees."
+    },
+    "dayporter": {
+      "title": "Day Porter Services",
+      "description": "Daytime janitorial services including restroom cleaning, trash removal, breakroom maintenance, and emergency spill response."
+    },
+    "viewAll": "View All Services",
+    "learnMore": "Learn More"
+  },
+  "whyUs": {
+    "title": "Why Choose Montreal Concierge Services?",
+    "items": {
+      "professional": {
+        "title": "Professional Team",
+        "description": "Trained, insured, and background-checked staff dedicated to excellence."
+      },
+      "flexible": {
+        "title": "Flexible Scheduling",
+        "description": "Daily, weekly, or customized cleaning schedules to fit your needs."
+      },
+      "eco": {
+        "title": "Eco-Friendly Products",
+        "description": "We use environmentally responsible cleaning products and methods."
+      },
+      "local": {
+        "title": "South Shore Coverage",
+        "description": "Serving Longueuil, Brossard, Repentigny, Terrebonne, and all South Shore communities."
+      }
+    }
+  },
+  "sectors": {
+    "title": "Industries We Serve",
+    "subtitle": "Tailored concierge solutions for every sector"
+  },
+  "cta": {
+    "title": "Ready to Get Started?",
+    "subtitle": "Request your free, no-obligation quote today. We respond within 60 minutes.",
+    "button": "Get Your Free Quote",
+    "phone": "Or Call Us Now"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Get a free quote for your concierge service needs.",
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "serviceType": "Type of Service",
+      "selectService": "Select a service...",
+      "description": "Describe Your Needs",
+      "descriptionPlaceholder": "Tell us about your space, frequency needed, and any special requirements...",
+      "budget": "Budget Range",
+      "selectBudget": "Select budget range...",
+      "urgency": "When Do You Need This?",
+      "selectUrgency": "Select urgency...",
+      "location": "Location",
+      "selectLocation": "Select your area...",
+      "terms": "I agree to the privacy policy and terms of service",
+      "submit": "Send Request",
+      "sending": "Sending...",
+      "success": "Your request has been sent successfully! We will contact you within 60 minutes.",
+      "error": "Something went wrong. Please try again or call us directly."
+    },
+    "budgetOptions": {
+      "under500": "Under $500/month",
+      "500to1000": "$500 - $1,000/month",
+      "1000to2500": "$1,000 - $2,500/month",
+      "2500to5000": "$2,500 - $5,000/month",
+      "over5000": "Over $5,000/month",
+      "custom": "Custom / One-time service"
+    },
+    "urgencyOptions": {
+      "asap": "As soon as possible",
+      "thisWeek": "This week",
+      "thisMonth": "This month",
+      "planning": "Just planning ahead"
+    }
+  },
+  "about": {
+    "title": "About Montreal Concierge Services | Professional Cleaning & Property Management",
+    "description": "Learn about Montreal Concierge Services - 10+ years of professional commercial cleaning, property management, and Airbnb concierge services across Montreal & Riviera Sud. 500+ satisfied clients.",
+    "hero": {
+      "title": "About Montreal Concierge Services",
+      "subtitle": "Professional concierge services and commercial cleaning on the Riviera Sud since 2014. We serve businesses, property owners, and Airbnb hosts with excellence and reliability."
+    },
+    "story": {
+      "title": "Our Story & Mission",
+      "paragraph1": "Founded in 2014, Montreal Concierge Services started with a simple vision: to provide professional-grade concierge and cleaning solutions to businesses and property owners in the Riviera Sud region. What began as a small team has grown into the most trusted name in commercial cleaning and property management across Montreal's South Shore.",
+      "paragraph2": "Today, we're proud to serve over 500 satisfied clients, from small offices to large commercial complexes. Our commitment to excellence, reliability, and attention to detail has made us the go-to choice for Airbnb management, office cleaning, and residential property services across Montreal and surrounding areas."
+    }
+  },
+  "blog": {
+    "title": "Concierge Services Blog",
+    "subtitle": "Tips, guides, and insights about commercial cleaning, property management, and Airbnb hosting in Montreal.",
+    "readMore": "Read More",
+    "categories": "Categories",
+    "recentPosts": "Recent Posts"
+  },
+  "footer": {
+    "description": "Professional concierge services for businesses, property owners, and rental hosts in the Greater Montreal area.",
+    "quickLinks": "Quick Links",
+    "ourServices": "Our Services",
+    "serviceAreas": "Service Areas",
+    "contactInfo": "Contact Info",
+    "copyright": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  }
+}
