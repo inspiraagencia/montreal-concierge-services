@@ -155,7 +155,7 @@ export default function BlogPage() {
               {BLOG_POSTS.map((post) => (
                 <Link
                   key={post.id}
-                  href={`/blog/${post.id}`}
+                  href={{ pathname: '/blog/[slug]', params: { slug: post.id } }}
                   className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all group"
                 >
                   {/* Image */}
