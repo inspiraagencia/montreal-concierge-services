@@ -1,0 +1,12 @@
+# Claude AI files
+.claude/
+
+# Development files
+*.log
+*.md.bak
+
+# Scripts de base de datos (no necesarios en producción)
+scripts/
+
+# Archivos de documentación internos
+PLAN*.md
