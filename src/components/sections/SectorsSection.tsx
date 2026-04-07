@@ -39,13 +39,17 @@ export default function SectorsSection() {
       <div className="section-container">
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="inline-block text-primary-500 font-semibold text-sm uppercase tracking-widest mb-3">
+          <span className="section-label justify-center">
             {locale === 'fr' ? 'Notre clientèle' : 'Our clientele'}
           </span>
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-900 mb-4">
+          <h2
+            className="font-heading font-bold mb-4"
+            style={{ fontSize: 'clamp(1.875rem, 3vw, 2.75rem)', color: '#0a1a4e' }}
+          >
             {t('title')}
           </h2>
-          <p className="text-neutral-600 text-lg">
+          <div className="divider-cyan mx-auto mb-4" />
+          <p className="text-lg" style={{ color: '#617d96' }}>
             {t('subtitle')}
           </p>
         </div>
@@ -55,12 +59,19 @@ export default function SectorsSection() {
           {sectors.map((sector) => (
             <div
               key={sector}
-              className="flex flex-col items-center gap-3 bg-neutral-50 hover:bg-primary-50 rounded-xl p-5 text-center transition-all group cursor-default border border-neutral-100 hover:border-primary-200"
+              className="group flex flex-col items-center gap-3 rounded-xl p-5 text-center transition-all duration-200 cursor-default"
+              style={{
+                background: '#f7f9fc',
+                border: '1px solid rgba(10,26,78,0.07)',
+              }}
             >
-              <span className="text-3xl group-hover:scale-125 transition-transform">
+              <span className="text-3xl transition-transform duration-200 group-hover:scale-125">
                 {iconMap[sector] || '🏢'}
               </span>
-              <p className="text-sm font-semibold text-neutral-700 group-hover:text-primary-700 leading-tight">
+              <p
+                className="text-sm font-semibold leading-tight transition-colors duration-200"
+                style={{ color: '#314556' }}
+              >
                 {sector}
               </p>
             </div>
@@ -68,24 +79,44 @@ export default function SectorsSection() {
         </div>
 
         {/* Coverage band */}
-        <div className="bg-gradient-to-r from-primary-800 to-primary-600 rounded-2xl p-8 text-white text-center">
-          <h3 className="font-heading text-xl font-bold mb-2">
-            {locale === 'fr' ? 'Couverture complète de la Rive-Sud' : 'Complete South Shore Coverage'}
-          </h3>
-          <p className="text-primary-200 text-sm mb-6">
-            {locale === 'fr'
-              ? 'Nous desservons plus de 16 municipalités dans la grande région de Montréal'
-              : 'We serve more than 16 municipalities in the greater Montreal area'}
-          </p>
-          <div className="flex flex-wrap justify-center gap-2">
-            {['Longueuil', 'Brossard', 'Repentigny', 'Terrebonne', 'Saint-Jean-sur-Richelieu', 'Boucherville', 'Varennes', 'Chambly', 'La Prairie', 'Candiac'].map((city) => (
-              <span key={city} className="bg-white/15 hover:bg-white/25 text-white text-sm font-medium rounded-full px-4 py-1.5 transition-colors">
-                {city}
+        <div
+          className="rounded-2xl p-8 text-center relative overflow-hidden"
+          style={{ background: 'linear-gradient(135deg, #060e2c 0%, #0a1a4e 50%, #0c2261 100%)' }}
+        >
+          {/* Background grid */}
+          <div
+            className="absolute inset-0 opacity-[0.04]"
+            style={{
+              backgroundImage: `linear-gradient(rgba(0,192,212,1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,192,212,1) 1px, transparent 1px)`,
+              backgroundSize: '40px 40px',
+            }}
+          />
+          <div className="relative z-10">
+            <h3 className="font-heading text-xl font-bold text-white mb-2">
+              {locale === 'fr' ? 'Couverture complète de la Rive-Sud' : 'Complete South Shore Coverage'}
+            </h3>
+            <p className="text-sm mb-6" style={{ color: 'rgba(255,255,255,0.55)' }}>
+              {locale === 'fr'
+                ? 'Nous desservons plus de 16 municipalités dans la grande région de Montréal'
+                : 'We serve more than 16 municipalities in the greater Montreal area'}
+            </p>
+            <div className="flex flex-wrap justify-center gap-2">
+              {['Longueuil', 'Brossard', 'Repentigny', 'Terrebonne', 'Saint-Jean-sur-Richelieu', 'Boucherville', 'Varennes', 'Chambly', 'La Prairie', 'Candiac'].map((city) => (
+                <span
+                  key={city}
+                  className="text-sm font-medium rounded-full px-4 py-1.5 transition-all"
+                  style={{ background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.85)', border: '1px solid rgba(255,255,255,0.1)' }}
+                >
+                  {city}
+                </span>
+              ))}
+              <span
+                className="text-sm font-semibold rounded-full px-4 py-1.5"
+                style={{ background: 'rgba(0,192,212,0.2)', color: '#3de7f8', border: '1px solid rgba(0,192,212,0.3)' }}
+              >
+                {locale === 'fr' ? '+ 6 autres villes' : '+ 6 more cities'}
               </span>
-            ))}
-            <span className="bg-accent-400/30 text-accent-200 text-sm font-medium rounded-full px-4 py-1.5">
-              {locale === 'fr' ? '+ 6 autres villes' : '+ 6 more cities'}
-            </span>
+            </div>
           </div>
         </div>
       </div>

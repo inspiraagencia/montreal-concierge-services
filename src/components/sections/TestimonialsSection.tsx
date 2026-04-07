@@ -12,61 +12,61 @@ export default function TestimonialsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
 
-  // Auto-advance every 5 seconds
   useEffect(() => {
     if (!isAutoPlay || testimonials.length === 0) return;
-
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length);
     }, 5000);
-
     return () => clearInterval(interval);
   }, [isAutoPlay, testimonials.length]);
 
-  const handlePrev = () => {
-    setIsAutoPlay(false);
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  };
-
-  const handleNext = () => {
-    setIsAutoPlay(false);
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-  };
-
-  const handleDotClick = (index: number) => {
-    setIsAutoPlay(false);
-    setCurrentIndex(index);
-  };
+  const handlePrev = () => { setIsAutoPlay(false); setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length); };
+  const handleNext = () => { setIsAutoPlay(false); setCurrentIndex((prev) => (prev + 1) % testimonials.length); };
+  const handleDotClick = (i: number) => { setIsAutoPlay(false); setCurrentIndex(i); };
 
   if (testimonials.length === 0) return null;
 
-  const headingText = locale === 'en' ? 'What Our Clients Say' : 'Ce Que Disent Nos Clients';
-  const prevText = locale === 'en' ? 'Previous' : 'Précédent';
-  const nextText = locale === 'en' ? 'Next' : 'Suivant';
-
   return (
-    <section className="py-16 md:py-20 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-6">
+    <section
+      className="section-padding"
+      style={{ background: 'linear-gradient(160deg, #060e2c 0%, #0a1a4e 50%, #0c2261 100%)' }}
+    >
+      <div className="section-container">
+
         {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            {locale === 'en' ? (
-              <>Client <strong>Testimonials</strong> - Why Businesses Trust Us</>
+        <div className="text-center mb-14">
+          <span className="section-label justify-center" style={{ color: '#3de7f8' }}>
+            <span className="inline-block w-6 h-px" style={{ background: '#3de7f8' }} />
+            {locale === 'fr' ? 'Témoignages' : 'Testimonials'}
+          </span>
+          <h2
+            className="font-heading font-bold text-white mb-4"
+            style={{ fontSize: 'clamp(1.875rem, 3vw, 2.75rem)' }}
+          >
+            {locale === 'fr' ? (
+              <>Avis Clients — Pourquoi les Entreprises{' '}
+                <span style={{ background: 'linear-gradient(135deg, #00c0d4, #3de7f8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                  Nous Font Confiance
+                </span>
+              </>
             ) : (
-              <>Avis Clients - Pourquoi les Entreprises <strong>Nous Font Confiance</strong></>
+              <>Client Reviews — Why Businesses{' '}
+                <span style={{ background: 'linear-gradient(135deg, #00c0d4, #3de7f8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                  Trust Us
+                </span>
+              </>
             )}
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            {locale === 'en'
-              ? 'Real reviews from satisfied clients who trust our professional concierge and cleaning services in Montreal and Riviera Sud.'
-              : 'Avis authentiques de clients satisfaits qui font confiance à nos services de conciergerie professionnels à Montréal et Riviera Sud.'}
+          <p className="max-w-2xl mx-auto" style={{ color: 'rgba(255,255,255,0.6)' }}>
+            {locale === 'fr'
+              ? 'Avis authentiques de clients satisfaits — entreprises, propriétaires et gestionnaires de la Rive-Sud et Grand Montréal.'
+              : 'Real reviews from satisfied clients — businesses, property owners and managers across South Shore and Greater Montreal.'}
           </p>
         </div>
 
-        {/* Carousel Container */}
-        <div className="relative">
-          {/* Testimonial Cards */}
-          <div className="relative h-80 md:h-96 mb-8">
+        {/* Carousel */}
+        <div className="max-w-4xl mx-auto">
+          <div className="relative min-h-72 mb-8">
             {testimonials.map((testimonial, index) => (
               <TestimonialCard
                 key={testimonial.id}
@@ -76,62 +76,59 @@ export default function TestimonialsSection() {
             ))}
           </div>
 
-          {/* Navigation Arrows */}
-          <div className="flex justify-between items-center mb-8">
+          {/* Controls */}
+          <div className="flex justify-between items-center">
             <button
               onClick={handlePrev}
-              className="
-                p-3 rounded-full bg-white shadow-md hover:bg-blue-50
-                transition transform hover:scale-110 active:scale-95
-                border border-gray-200
-              "
-              aria-label={prevText}
-              title={prevText}
+              className="w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200"
+              style={{
+                background: 'rgba(255,255,255,0.08)',
+                border: '1px solid rgba(255,255,255,0.15)',
+                color: 'white',
+              }}
+              aria-label={locale === 'fr' ? 'Précédent' : 'Previous'}
             >
-              <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
 
-            {/* Dot Indicators */}
-            <div className="flex gap-2 justify-center flex-wrap">
-              {testimonials.map((_, index) => (
+            {/* Dots */}
+            <div className="flex gap-2 items-center">
+              {testimonials.map((_, i) => (
                 <button
-                  key={index}
-                  onClick={() => handleDotClick(index)}
-                  className={`
-                    w-3 h-3 rounded-full transition transform
-                    ${
-                      index === currentIndex
-                        ? 'bg-blue-600 scale-125'
-                        : 'bg-gray-300 hover:bg-gray-400'
-                    }
-                  `}
-                  aria-label={`Go to testimonial ${index + 1}`}
+                  key={i}
+                  onClick={() => handleDotClick(i)}
+                  className="rounded-full transition-all duration-300"
+                  style={{
+                    width: i === currentIndex ? '24px' : '8px',
+                    height: '8px',
+                    background: i === currentIndex ? '#00c0d4' : 'rgba(255,255,255,0.25)',
+                  }}
+                  aria-label={`Testimonial ${i + 1}`}
                 />
               ))}
             </div>
 
             <button
               onClick={handleNext}
-              className="
-                p-3 rounded-full bg-white shadow-md hover:bg-blue-50
-                transition transform hover:scale-110 active:scale-95
-                border border-gray-200
-              "
-              aria-label={nextText}
-              title={nextText}
+              className="w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200"
+              style={{
+                background: 'rgba(255,255,255,0.08)',
+                border: '1px solid rgba(255,255,255,0.15)',
+                color: 'white',
+              }}
+              aria-label={locale === 'fr' ? 'Suivant' : 'Next'}
             >
-              <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
           </div>
 
-          {/* Counter */}
-          <div className="text-center text-sm text-gray-600">
+          <p className="text-center text-sm mt-4" style={{ color: 'rgba(255,255,255,0.35)' }}>
             {currentIndex + 1} / {testimonials.length}
-          </div>
+          </p>
         </div>
       </div>
     </section>
