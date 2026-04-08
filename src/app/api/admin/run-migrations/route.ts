@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { readFile } from 'fs/promises';
+import path from 'path';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
@@ -71,16 +73,29 @@ CREATE POLICY IF NOT EXISTS "audit_logs_select_authenticated" ON public.audit_lo
   );
 `;
 
+async function getSqlMigrations() {
+  try {
+    return await readFile(
+      path.join(process.cwd(), 'supabase', 'migrations', '003_dashboard_schema_compatibility.sql'),
+      'utf8'
+    );
+  } catch {
+    return SQL_MIGRATIONS;
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { action } = await request.json().catch(() => ({ action: 'get-sql' }));
 
     if (action === 'get-sql') {
+      const sql = await getSqlMigrations();
+
       // Return the SQL for manual execution
       return NextResponse.json({
         success: true,
         message: 'SQL migration script retrieved',
-        sql: SQL_MIGRATIONS,
+        sql,
         instructions: [
           'Go to: https://app.supabase.com/project/pymttfagfwetbsqqeeej/sql',
           'Click "New Query"',
@@ -94,48 +109,43 @@ export async function POST(request: NextRequest) {
     if (action === 'verify') {
       // Verify if tables exist
       const supabase = createClient(supabaseUrl, serviceRoleKey);
+      const requiredTables = [
+        'admin_users',
+        'audit_logs',
+        'contact_submissions',
+        'services',
+        'blog_posts',
+        'testimonials',
+        'images_gallery',
+      ];
+      const missingTables: Record<string, boolean> = {};
 
-      let error1: any = null;
-      let error2: any = null;
-
-      try {
-        await supabase
-          .from('admin_users')
-          .select('count')
+      for (const table of requiredTables) {
+        const { error } = await supabase
+          .from(table)
+          .select('id')
           .limit(1);
-      } catch (e) {
-        error1 = { message: 'Table not found' };
+
+        missingTables[table] = Boolean(error);
       }
 
-      try {
-        await supabase
-          .from('audit_logs')
-          .select('count')
-          .limit(1);
-      } catch (e) {
-        error2 = { message: 'Table not found' };
-      }
+      const tablesCreated = !Object.values(missingTables).some(Boolean);
 
-      const adminUsersExists = !error1 || !error1.message.includes('does not exist');
-      const auditLogsExists = !error2 || !error2.message.includes('does not exist');
-
-      if (adminUsersExists && auditLogsExists) {
+      if (tablesCreated) {
         return NextResponse.json({
           success: true,
-          message: '✅ All tables created successfully!',
+          message: 'All dashboard tables are available.',
           tablesCreated: true,
         });
-      } else {
-        return NextResponse.json({
-          success: false,
-          message: '❌ Some tables are still missing. Please execute the SQL in Supabase Dashboard.',
-          tablesCreated: false,
-          missingTables: {
-            admin_users: !adminUsersExists,
-            audit_logs: !auditLogsExists,
-          },
-        });
       }
+
+      return NextResponse.json({
+        success: false,
+        message: 'Some dashboard tables are missing. Please execute the SQL in Supabase Dashboard.',
+        tablesCreated: false,
+        missingTables,
+      });
+
     }
 
     return NextResponse.json({ error: 'Invalid action' }, { status: 400 });

@@ -6,11 +6,7 @@ import Link from 'next/link';
 export default function SetupMigrationsPage() {
   const [step, setStep] = useState<'check' | 'execute' | 'verify' | 'complete' | 'error'>('check');
   const [loading, setLoading] = useState(true);
-  const [tablesExist, setTablesExist] = useState(false);
-  const [verifyChecks, setVerifyChecks] = useState<{
-    admin_users: boolean;
-    audit_logs: boolean;
-  }>({ admin_users: false, audit_logs: false });
+  const [sqlToExecute, setSqlToExecute] = useState('');
 
   const sqlMigrations = `-- Create admin_users table
 CREATE TABLE IF NOT EXISTS public.admin_users (
@@ -80,8 +76,23 @@ CREATE POLICY IF NOT EXISTS "audit_logs_select_authenticated" ON public.audit_lo
   );`;
 
   useEffect(() => {
+    loadSql();
     checkTables();
   }, []);
+
+  const loadSql = async () => {
+    try {
+      const response = await fetch('/api/admin/run-migrations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'get-sql' }),
+      });
+      const data = await response.json();
+      setSqlToExecute(data.sql || sqlMigrations);
+    } catch {
+      setSqlToExecute(sqlMigrations);
+    }
+  };
 
   const checkTables = async () => {
     try {
@@ -92,7 +103,6 @@ CREATE POLICY IF NOT EXISTS "audit_logs_select_authenticated" ON public.audit_lo
       });
 
       const data = await response.json();
-      setTablesExist(data.tablesCreated);
       setLoading(false);
 
       if (data.tablesCreated) {
@@ -107,7 +117,7 @@ CREATE POLICY IF NOT EXISTS "audit_logs_select_authenticated" ON public.audit_lo
   };
 
   const copySql = () => {
-    navigator.clipboard.writeText(sqlMigrations);
+    navigator.clipboard.writeText(sqlToExecute || sqlMigrations);
     alert('SQL copied to clipboard!');
   };
 
@@ -218,7 +228,7 @@ CREATE POLICY IF NOT EXISTS "audit_logs_select_authenticated" ON public.audit_lo
                 📝 View SQL to Execute
               </summary>
               <pre className="mt-4 bg-slate-900 rounded p-4 overflow-x-auto text-sm text-gray-300">
-                {sqlMigrations}
+                {sqlToExecute || sqlMigrations}
               </pre>
             </details>
           </div>
@@ -234,11 +244,11 @@ CREATE POLICY IF NOT EXISTS "audit_logs_select_authenticated" ON public.audit_lo
                 <div className="space-y-2 text-sm">
                   <div>
                     <span className="text-gray-400">Email:</span>
-                    <span className="ml-2 font-mono">inspiraagencia@hotmail.com</span>
+                    <span className="ml-2 font-mono">Use your admin email</span>
                   </div>
                   <div>
                     <span className="text-gray-400">Password:</span>
-                    <span className="ml-2 font-mono">Abcde123450</span>
+                    <span className="ml-2 font-mono">Use the password you configured in Supabase Auth</span>
                   </div>
                   <div>
                     <span className="text-gray-400">Role:</span>

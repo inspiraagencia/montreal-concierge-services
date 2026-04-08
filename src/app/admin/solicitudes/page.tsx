@@ -1,50 +1,63 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import ProtectedRoute from '@/components/admin/ProtectedRoute';
 import AdminLayout from '@/components/admin/AdminLayout';
 
 interface ContactSubmission {
   id: string;
+  name: string;
   email: string;
   phone: string;
-  name: string;
-  service: string;
-  message: string;
+  service_type: string | null;
+  service: string | null;
+  description: string | null;
+  message: string | null;
+  budget: string | null;
+  urgency: string | null;
+  location: string | null;
+  status: 'new' | 'contacted' | 'in_progress' | 'completed' | 'closed' | 'pending' | 'responded';
   created_at: string;
-  responded: boolean;
+  responded?: boolean;
 }
+
+type SubmissionStatus = ContactSubmission['status'];
 
 function SolicitudesContent() {
   const [submissions, setSubmissions] = useState<ContactSubmission[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'all' | 'responded' | 'pending'>('all');
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
 
-  useEffect(() => {
-    const fetchSubmissions = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('contact_submissions')
-          .select('*')
-          .order('created_at', { ascending: false });
+  const fetchSubmissions = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from('contact_submissions')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-        if (error) throw error;
-        setSubmissions(data || []);
-      } catch (error) {
-        console.error('Error fetching submissions:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSubmissions();
+      if (error) throw error;
+      setSubmissions(data || []);
+    } catch (error) {
+      console.error('Error fetching submissions:', error);
+    } finally {
+      setLoading(false);
+    }
   }, [supabase]);
 
+  useEffect(() => {
+    fetchSubmissions();
+  }, [fetchSubmissions]);
+
+  const isResponded = (sub: ContactSubmission) => (
+    sub.responded === true ||
+    ['responded', 'contacted', 'in_progress', 'completed', 'closed'].includes(sub.status)
+  );
+
   const filteredSubmissions = submissions.filter((sub) => {
-    if (filter === 'responded') return sub.responded;
-    if (filter === 'pending') return !sub.responded;
+    if (filter === 'responded') return isResponded(sub);
+    if (filter === 'pending') return !isResponded(sub);
     return true;
   });
 
@@ -57,6 +70,31 @@ function SolicitudesContent() {
       hour: '2-digit',
       minute: '2-digit',
     });
+  };
+
+  const updateStatus = async (submission: ContactSubmission, status: SubmissionStatus) => {
+    const responded = ['responded', 'contacted', 'in_progress', 'completed', 'closed'].includes(status);
+
+    try {
+      const { error } = await supabase
+        .from('contact_submissions')
+        .update({
+          status,
+          responded,
+          responded_at: responded ? new Date().toISOString() : null,
+        })
+        .eq('id', submission.id);
+
+      if (error) throw error;
+      setSubmissions((current) =>
+        current.map((item) =>
+          item.id === submission.id ? { ...item, status, responded } : item
+        )
+      );
+    } catch (error) {
+      console.error('Error updating submission status:', error);
+      alert('No se pudo actualizar el estado de la solicitud.');
+    }
   };
 
   if (loading) {
@@ -78,7 +116,7 @@ function SolicitudesContent() {
             Solicitudes de Cotización
           </h2>
           <p style={{ color: '#617d96' }}>
-            Total: {submissions.length} • Pendientes: {submissions.filter((s) => !s.responded).length}
+            Total: {submissions.length} - Pendientes: {submissions.filter((s) => !isResponded(s)).length}
           </p>
         </div>
 
@@ -179,8 +217,13 @@ function SolicitudesContent() {
                             color: '#0a1a4e',
                           }}
                         >
-                          {submission.service}
+                          {submission.service_type || submission.service || 'Sin servicio'}
                         </span>
+                        {submission.location && (
+                          <p className="text-xs mt-2" style={{ color: '#617d96' }}>
+                            {submission.location}
+                          </p>
+                        )}
                       </td>
                       <td className="px-6 py-4">
                         <p className="text-sm" style={{ color: '#617d96' }}>
@@ -190,13 +233,27 @@ function SolicitudesContent() {
                       <td className="px-6 py-4">
                         <span
                           className={`text-xs px-3 py-1 rounded-full font-semibold ${
-                            submission.responded
+                            isResponded(submission)
                               ? 'bg-green-100 text-green-700'
                               : 'bg-yellow-100 text-yellow-700'
                           }`}
                         >
-                          {submission.responded ? '✓ Respondida' : '⏳ Pendiente'}
+                          {isResponded(submission) ? 'Respondida' : 'Pendiente'}
                         </span>
+                        <select
+                          value={submission.status || 'new'}
+                          onChange={(event) => updateStatus(submission, event.target.value as SubmissionStatus)}
+                          className="block mt-2 text-xs px-2 py-1 rounded border bg-white"
+                          style={{ borderColor: '#e5e7eb', color: '#0a1a4e' }}
+                        >
+                          <option value="new">Nueva</option>
+                          <option value="pending">Pendiente</option>
+                          <option value="contacted">Contactada</option>
+                          <option value="in_progress">En progreso</option>
+                          <option value="completed">Completada</option>
+                          <option value="closed">Cerrada</option>
+                          <option value="responded">Respondida</option>
+                        </select>
                       </td>
                     </tr>
                   ))}

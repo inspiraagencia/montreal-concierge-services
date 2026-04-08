@@ -1,0 +1,59 @@
+
+> montreal-concierge-services@1.0.0 dev
+> next dev
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+  - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 3.6s
+ ○ Compiling /admin/login ...
+ ✓ Compiled /admin/login in 4.6s (564 modules)
+ GET /admin/login 200 in 5056ms
+ ○ Compiling /[locale] ...
+ ✓ Compiled /[locale] in 5.6s (1012 modules)
+ GET /favicon.ico 404 in 6630ms
+ ✓ Compiled in 611ms (1012 modules)
+ ✓ Compiled in 423ms (1012 modules)
+ GET /admin/login 200 in 196ms
+ ○ Compiling /admin/setup-migrations ...
+ ✓ Compiled /admin/setup-migrations in 757ms (738 modules)
+ GET /admin/setup-migrations 200 in 1056ms
+ ○ Compiling /api/admin/run-migrations ...
+ ✓ Compiled /api/admin/run-migrations in 893ms (378 modules)
+ POST /api/admin/run-migrations 200 in 1183ms
+ POST /api/admin/run-migrations 200 in 1205ms
+ POST /api/admin/run-migrations 200 in 2560ms
+ POST /api/admin/run-migrations 200 in 2597ms
+ GET /admin/login 200 in 290ms
+ GET /admin/login 200 in 128ms
+ ○ Compiling /admin ...
+ ✓ Compiled /admin in 812ms (750 modules)
+ ○ Compiling /admin/solicitudes ...
+ ✓ Compiled /admin/solicitudes in 698ms (756 modules)
+ ✓ Compiled in 1217ms (756 modules)
+ ✓ Compiled in 392ms (439 modules)
+ GET /admin 200 in 168ms
+ ✓ Compiled in 508ms (756 modules)
+ ✓ Compiled in 777ms (756 modules)
+ GET /admin/login 200 in 201ms
+ GET /admin 200 in 62ms
+ GET /admin/solicitudes 200 in 63ms
+ ○ Compiling /admin/servicios ...
+ ✓ Compiled /admin/servicios in 527ms (748 modules)
+ GET /admin/servicios 200 in 647ms
+ ○ Compiling /admin/blog ...
+ ✓ Compiled /admin/blog in 511ms (754 modules)
+ GET /admin/blog 200 in 587ms
+ ✓ Compiled /admin/testimonios in 406ms (760 modules)
+ GET /admin/testimonios 200 in 473ms
+ ✓ Compiled /admin/galeria in 411ms (766 modules)
+ GET /admin/galeria 200 in 526ms
+ ✓ Compiled /admin/usuarios in 406ms (772 modules)
+ GET /admin/usuarios 200 in 463ms
+ ✓ Compiled /admin/audit in 437ms (778 modules)
+ GET /admin/audit 200 in 509ms
+ ○ Compiling /admin/reportes ...
+ ✓ Compiled /admin/reportes in 658ms (784 modules)
+ GET /admin/reportes 200 in 737ms

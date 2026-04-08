@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import ProtectedRoute from '@/components/admin/ProtectedRoute';
 import AdminLayout from '@/components/admin/AdminLayout';
@@ -22,7 +22,7 @@ function AuditContent() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
   const [timeRange, setTimeRange] = useState('7');
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
 
   useEffect(() => {
     fetchLogs();

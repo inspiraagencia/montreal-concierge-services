@@ -1,12 +1,59 @@
 'use client';
 
+import { useEffect, useMemo, useState } from 'react';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
 import ProtectedRoute from '@/components/admin/ProtectedRoute';
 import AdminLayout from '@/components/admin/AdminLayout';
+import { createClient } from '@/utils/supabase/client';
 import Link from 'next/link';
+
+interface DashboardStats {
+  submissions: number;
+  pending: number;
+  services: number;
+  posts: number;
+  testimonials: number;
+}
 
 function AdminDashboardContent() {
   const { user } = useAdminAuth();
+  const supabase = useMemo(() => createClient(), []);
+  const [stats, setStats] = useState<DashboardStats>({
+    submissions: 0,
+    pending: 0,
+    services: 0,
+    posts: 0,
+    testimonials: 0,
+  });
+
+  useEffect(() => {
+    const loadStats = async () => {
+      const [submissionsResult, servicesResult, postsResult, testimonialsResult] = await Promise.all([
+        supabase.from('contact_submissions').select('id, status, responded'),
+        supabase.from('services').select('id'),
+        supabase.from('blog_posts').select('id'),
+        supabase.from('testimonials').select('id'),
+      ]);
+
+      const submissions = submissionsResult.data || [];
+      const pending = submissions.filter((submission: any) => (
+        submission.responded !== true &&
+        !['responded', 'contacted', 'in_progress', 'completed', 'closed'].includes(submission.status || '')
+      )).length;
+
+      setStats({
+        submissions: submissions.length,
+        pending,
+        services: servicesResult.data?.length || 0,
+        posts: postsResult.data?.length || 0,
+        testimonials: testimonialsResult.data?.length || 0,
+      });
+    };
+
+    loadStats().catch((error) => {
+      console.error('Error loading dashboard stats:', error);
+    });
+  }, [supabase]);
 
   const dashboardModules = [
     {
@@ -93,6 +140,30 @@ function AdminDashboardContent() {
           <p style={{ color: 'rgba(255,255,255,0.7)' }}>
             Rol: <span className="font-semibold text-white capitalize">{user?.role}</span>
           </p>
+        </div>
+
+        {/* Stats Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-4">
+          {[
+            { label: 'Solicitudes', value: stats.submissions, color: '#00c0d4' },
+            { label: 'Pendientes', value: stats.pending, color: '#f97316' },
+            { label: 'Servicios', value: stats.services, color: '#1a4499' },
+            { label: 'Posts', value: stats.posts, color: '#059669' },
+            { label: 'Testimonios', value: stats.testimonials, color: '#e8aa1a' },
+          ].map((item) => (
+            <div
+              key={item.label}
+              className="rounded-2xl bg-white p-5 shadow-sm"
+              style={{ borderTop: `4px solid ${item.color}` }}
+            >
+              <p className="text-sm font-medium" style={{ color: '#617d96' }}>
+                {item.label}
+              </p>
+              <p className="text-3xl font-bold mt-2" style={{ color: '#0a1a4e' }}>
+                {item.value}
+              </p>
+            </div>
+          ))}
         </div>
 
         {/* Modules Grid */}

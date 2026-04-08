@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import ProtectedRoute from '@/components/admin/ProtectedRoute';
 import AdminLayout from '@/components/admin/AdminLayout';
@@ -20,6 +20,11 @@ interface ContactStats {
   conversionRate: string;
 }
 
+interface ContactSubmission {
+  status?: string | null;
+  responded?: boolean | null;
+}
+
 function ReportesContent() {
   const [stats, setStats] = useState<StatsCard[]>([]);
   const [contactStats, setContactStats] = useState<ContactStats>({
@@ -30,7 +35,7 @@ function ReportesContent() {
   });
   const [loading, setLoading] = useState(true);
   const [timeRange, setTimeRange] = useState('30');
-  const supabase = createClient();
+  const supabase = useMemo(() => createClient(), []);
 
   useEffect(() => {
     fetchStats();
@@ -48,8 +53,13 @@ function ReportesContent() {
         .select('*')
         .gte('created_at', new Date(Date.now() - parseInt(timeRange) * 24 * 60 * 60 * 1000).toISOString());
 
+      const isResponded = (submission: ContactSubmission) => (
+        submission.responded === true ||
+        ['responded', 'contacted', 'in_progress', 'completed', 'closed'].includes(submission.status || '')
+      );
+
       const totalSubmissions = allSubmissions?.length || 0;
-      const pendingSubmissions = allSubmissions?.filter((s) => !s.responded).length || 0;
+      const pendingSubmissions = allSubmissions?.filter((submission) => !isResponded(submission)).length || 0;
       const respondedSubmissions = totalSubmissions - pendingSubmissions;
       const conversionRate = totalSubmissions > 0 ? ((respondedSubmissions / totalSubmissions) * 100).toFixed(1) : '0';
 
