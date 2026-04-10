@@ -1,6 +1,7 @@
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { SITE_CONFIG } from '@/lib/constants';
+import ScrollReveal from '@/components/ScrollReveal';
 
 export default function CTASection() {
   const t = useTranslations('cta');
@@ -44,7 +45,7 @@ export default function CTASection() {
       />
 
       <div className="section-container relative z-10">
-        <div className="max-w-3xl mx-auto text-center">
+        <ScrollReveal><div className="max-w-3xl mx-auto text-center">
 
           {/* Badge */}
           <div
@@ -128,7 +129,7 @@ export default function CTASection() {
               </div>
             ))}
           </div>
-        </div>
+        </div></ScrollReveal>
       </div>
     </section>
   );

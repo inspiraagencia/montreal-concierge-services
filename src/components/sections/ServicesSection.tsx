@@ -1,6 +1,7 @@
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { SERVICE_CATEGORIES } from '@/lib/constants';
+import ScrollReveal from '@/components/ScrollReveal';
 
 const SERVICE_DESIGN: Record<string, {
   icon: React.ReactNode;
@@ -77,31 +78,35 @@ export default function ServicesSection() {
       <div className="section-container">
 
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="section-label justify-center">
-            {locale === 'fr' ? 'Ce que nous offrons' : 'What we offer'}
-          </span>
-          <h2
-            className="font-heading font-bold mb-5"
-            style={{ fontSize: 'clamp(1.875rem, 3vw, 2.75rem)', color: '#0a1a4e' }}
-          >
-            {t('title')}
-          </h2>
-          <div className="divider-cyan mx-auto mb-5" />
-          <p className="text-lg leading-relaxed" style={{ color: '#617d96' }}>
-            {t('subtitle')}
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <span className="section-label justify-center">
+              {locale === 'fr' ? 'Ce que nous offrons' : 'What we offer'}
+            </span>
+            <h2
+              className="font-heading font-bold mb-5"
+              style={{ fontSize: 'clamp(1.875rem, 3vw, 2.75rem)', color: '#0a1a4e' }}
+            >
+              {t('title')}
+            </h2>
+            <div className="divider-cyan mx-auto mb-5" />
+            <p className="text-lg leading-relaxed" style={{ color: '#617d96' }}>
+              {t('subtitle')}
+            </p>
+          </div>
+        </ScrollReveal>
 
         {/* Services grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-7 mb-12">
           {services.map((service, i) => (
-            <ServiceCard key={service.id} service={service} index={i} locale={locale} learnMore={t('learnMore')} />
+            <ScrollReveal key={service.id} direction="scale" delay={Math.min(i + 1, 5) as 1|2|3|4|5}>
+              <ServiceCard service={service} index={i} locale={locale} learnMore={t('learnMore')} />
+            </ScrollReveal>
           ))}
         </div>
 
         {/* Bottom CTA */}
-        <div className="text-center">
+        <ScrollReveal><div className="text-center">
           <Link
             href="/services"
             className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl font-semibold text-sm transition-all duration-300 border-2"
@@ -116,7 +121,7 @@ export default function ServicesSection() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </Link>
-        </div>
+        </div></ScrollReveal>
       </div>
     </section>
   );

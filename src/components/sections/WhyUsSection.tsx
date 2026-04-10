@@ -1,4 +1,5 @@
 import { useTranslations, useLocale } from 'next-intl';
+import ScrollReveal from '@/components/ScrollReveal';
 
 const WHY_US_ITEMS = [
   {
@@ -61,7 +62,7 @@ export default function WhyUsSection() {
         <div className="grid lg:grid-cols-2 gap-16 items-start">
 
           {/* Left column */}
-          <div>
+          <ScrollReveal direction="left"><div>
             <span className="section-label">
               {locale === 'fr' ? 'Notre engagement' : 'Our commitment'}
             </span>
@@ -139,10 +140,10 @@ export default function WhyUsSection() {
                 style={{ background: 'radial-gradient(circle, #00c0d4, transparent)' }}
               />
             </div>
-          </div>
+          </div></ScrollReveal>
 
           {/* Right column — why us items */}
-          <div className="flex flex-col gap-4 lg:mt-16">
+          <ScrollReveal direction="right"><div className="flex flex-col gap-4 lg:mt-16">
             {WHY_US_ITEMS.map((item) => (
               <div
                 key={item.key}
@@ -220,7 +221,7 @@ export default function WhyUsSection() {
                 ))}
               </div>
             </div>
-          </div>
+          </div></ScrollReveal>
         </div>
       </div>
     </section>

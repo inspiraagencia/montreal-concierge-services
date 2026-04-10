@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { verifyAdminAuth } from '../auth-guard';
 
 const categoryPaths: Record<string, string> = {
   hero: 'public/images/hero',
@@ -13,6 +14,9 @@ const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
 export async function POST(request: NextRequest) {
   try {
+    const auth = await verifyAdminAuth(request);
+    if ('error' in auth) return auth.error;
+
     const formData = await request.formData();
     const file = formData.get('file') as File;
     const category = formData.get('category') as string;

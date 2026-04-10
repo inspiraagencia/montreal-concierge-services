@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { verifyAdminAuth } from '../auth-guard';
 
 const categoryPaths: Record<string, string> = {
   hero: 'public/images/hero',
@@ -11,6 +12,9 @@ const categoryPaths: Record<string, string> = {
 
 export async function DELETE(request: NextRequest) {
   try {
+    const auth = await verifyAdminAuth(request);
+    if ('error' in auth) return auth.error;
+
     const { imageName, category } = await request.json();
 
     if (!imageName || !category) {

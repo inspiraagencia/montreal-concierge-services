@@ -1,5 +1,6 @@
 import { useTranslations, useLocale } from 'next-intl';
 import { CLIENT_SECTORS } from '@/lib/constants';
+import ScrollReveal from '@/components/ScrollReveal';
 
 const SECTOR_ICONS: Record<string, string> = {
   'Office Buildings': '🏢',
@@ -38,27 +39,29 @@ export default function SectorsSection() {
     <section className="section-padding bg-white" id="sectors">
       <div className="section-container">
         {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="section-label justify-center">
-            {locale === 'fr' ? 'Notre clientèle' : 'Our clientele'}
-          </span>
-          <h2
-            className="font-heading font-bold mb-4"
-            style={{ fontSize: 'clamp(1.875rem, 3vw, 2.75rem)', color: '#0a1a4e' }}
-          >
-            {t('title')}
-          </h2>
-          <div className="divider-cyan mx-auto mb-4" />
-          <p className="text-lg" style={{ color: '#617d96' }}>
-            {t('subtitle')}
-          </p>
-        </div>
+        <ScrollReveal>
+          <div className="text-center max-w-2xl mx-auto mb-12">
+            <span className="section-label justify-center">
+              {locale === 'fr' ? 'Notre clientèle' : 'Our clientele'}
+            </span>
+            <h2
+              className="font-heading font-bold mb-4"
+              style={{ fontSize: 'clamp(1.875rem, 3vw, 2.75rem)', color: '#0a1a4e' }}
+            >
+              {t('title')}
+            </h2>
+            <div className="divider-cyan mx-auto mb-4" />
+            <p className="text-lg" style={{ color: '#617d96' }}>
+              {t('subtitle')}
+            </p>
+          </div>
+        </ScrollReveal>
 
         {/* Sectors grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-12">
-          {sectors.map((sector) => (
+          {sectors.map((sector, i) => (
+            <ScrollReveal key={sector} direction="scale" delay={Math.min(i + 1, 10) as any}>
             <div
-              key={sector}
               className="group flex flex-col items-center gap-3 rounded-xl p-5 text-center transition-all duration-200 cursor-default"
               style={{
                 background: '#f7f9fc',
@@ -75,10 +78,12 @@ export default function SectorsSection() {
                 {sector}
               </p>
             </div>
+            </ScrollReveal>
           ))}
         </div>
 
         {/* Coverage band */}
+        <ScrollReveal>
         <div
           className="rounded-2xl p-8 text-center relative overflow-hidden"
           style={{ background: 'linear-gradient(135deg, #060e2c 0%, #0a1a4e 50%, #0c2261 100%)' }}
@@ -119,6 +124,7 @@ export default function SectorsSection() {
             </div>
           </div>
         </div>
+        </ScrollReveal>
       </div>
     </section>
   );

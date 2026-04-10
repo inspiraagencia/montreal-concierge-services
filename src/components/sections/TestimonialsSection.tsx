@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useLocale } from 'next-intl';
 import TestimonialCard from '@/components/TestimonialCard';
 import { testimonialsByLocale } from '@/lib/testimonials-data';
+import ScrollReveal from '@/components/ScrollReveal';
 
 export default function TestimonialsSection() {
   const locale = useLocale() as 'en' | 'fr';
@@ -34,7 +35,7 @@ export default function TestimonialsSection() {
       <div className="section-container">
 
         {/* Header */}
-        <div className="text-center mb-14">
+        <ScrollReveal><div className="text-center mb-14">
           <span className="section-label justify-center" style={{ color: '#3de7f8' }}>
             <span className="inline-block w-6 h-px" style={{ background: '#3de7f8' }} />
             {locale === 'fr' ? 'Témoignages' : 'Testimonials'}
@@ -62,7 +63,7 @@ export default function TestimonialsSection() {
               ? 'Avis authentiques de clients satisfaits — entreprises, propriétaires et gestionnaires de la Rive-Sud et Grand Montréal.'
               : 'Real reviews from satisfied clients — businesses, property owners and managers across South Shore and Greater Montreal.'}
           </p>
-        </div>
+        </div></ScrollReveal>
 
         {/* Carousel */}
         <div className="max-w-4xl mx-auto">

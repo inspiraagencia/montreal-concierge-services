@@ -162,16 +162,18 @@ export default function HeroSection() {
               {locale === 'fr' ? (
                 <>
                   <strong className="text-white font-semibold">Nettoyage commercial</strong>,{' '}
-                  <strong className="text-white font-semibold">gestion Airbnb</strong> et{' '}
-                  <strong className="text-white font-semibold">entretien de propriété</strong>{' '}
-                  — des équipes certifiées pour les entreprises et gestionnaires exigeants.
+                  <strong className="text-white font-semibold">conciergerie Airbnb</strong>,{' '}
+                  <strong className="text-white font-semibold">gestion de propriété</strong> et{' '}
+                  <strong className="text-white font-semibold">conciergerie de jour</strong>{' '}
+                  — des équipes certifiées pour les entreprises, condos et gestionnaires exigeants.
                 </>
               ) : (
                 <>
                   <strong className="text-white font-semibold">Commercial cleaning</strong>,{' '}
-                  <strong className="text-white font-semibold">Airbnb management</strong> and{' '}
-                  <strong className="text-white font-semibold">property maintenance</strong>{' '}
-                  — certified teams for demanding businesses and property managers.
+                  <strong className="text-white font-semibold">Airbnb concierge service</strong>,{' '}
+                  <strong className="text-white font-semibold">property management</strong> and{' '}
+                  <strong className="text-white font-semibold">day porter services</strong>{' '}
+                  — certified teams for businesses, condo buildings, and property managers.
                 </>
               )}
             </p>

@@ -1,5 +1,6 @@
 import { useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing';
+import ScrollReveal from '@/components/ScrollReveal';
 
 export default function MapSection() {
   const locale = useLocale();
@@ -51,7 +52,7 @@ export default function MapSection() {
       <div className="section-container">
 
         {/* Header */}
-        <div className="mb-12">
+        <ScrollReveal direction="left"><div className="mb-12">
           <span className="section-label">
             {locale === 'fr' ? 'Zones de service' : 'Service coverage'}
           </span>
@@ -71,7 +72,7 @@ export default function MapSection() {
               ? 'Services de conciergerie et nettoyage commercial professionnels à Montréal et dans la région de Riviera Sud. Cliquez sur la carte pour explorer nos zones de service.'
               : 'Professional concierge and commercial cleaning services across Montreal and the South Shore. Click the map to explore our service areas.'}
           </p>
-        </div>
+        </div></ScrollReveal>
 
         {/* Map */}
         <div
@@ -94,8 +95,8 @@ export default function MapSection() {
         {/* Area cards */}
         <div className="grid md:grid-cols-3 gap-6 mb-10">
           {areas.map((area, i) => (
+            <ScrollReveal key={i} direction="up" delay={(i + 1) as 1|2|3}>
             <div
-              key={i}
               className="group rounded-2xl p-6 bg-white transition-all duration-300"
               style={{
                 boxShadow: '0 2px 16px rgba(10,26,78,0.06)',
@@ -116,6 +117,7 @@ export default function MapSection() {
                 {locale === 'fr' ? area.descFr : area.descEn}
               </p>
             </div>
+            </ScrollReveal>
           ))}
         </div>
 

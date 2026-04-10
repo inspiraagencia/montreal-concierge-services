@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { verifyAdminAuth } from '../auth-guard';
 
 export const dynamic = 'force-dynamic';
 
@@ -13,6 +14,8 @@ const categoryPaths: Record<string, string> = {
 
 export async function GET(request: NextRequest) {
   try {
+    const auth = await verifyAdminAuth(request);
+    if ('error' in auth) return auth.error;
     const searchParams = request.nextUrl.searchParams;
     const category = searchParams.get('category') || 'hero';
 
