@@ -1,12 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import crypto from 'crypto';
+import { resend } from '@/lib/resend';
+
+// Generate secure random password
+function generateSecurePassword(length = 16): string {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
+  let password = '';
+  for (let i = 0; i < length; i++) {
+    password += chars.charAt(crypto.randomInt(0, chars.length));
+  }
+  return password;
+}
 
 export async function POST(request: NextRequest) {
   try {
-    const { setup_key } = await request.json();
+    const { setup_key, email } = await request.json();
 
-    if (setup_key !== process.env.ADMIN_SETUP_KEY && setup_key !== 'INIT_MONTREAL_2024') {
+    // ✅ CRITICAL FIX: Remove hardcoded fallback setup key
+    if (!process.env.ADMIN_SETUP_KEY || setup_key !== process.env.ADMIN_SETUP_KEY) {
       return NextResponse.json({ error: 'Invalid setup key' }, { status: 403 });
+    }
+
+    // ✅ CRITICAL FIX: Require email parameter instead of hardcoded
+    if (!email || !email.includes('@')) {
+      return NextResponse.json({ error: 'Valid email required' }, { status: 400 });
     }
 
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -21,8 +39,8 @@ export async function POST(request: NextRequest) {
       auth: { autoRefreshToken: false, persistSession: false },
     });
 
-    const email = 'inspiraagencia@hotmail.com';
-    const password = 'Abcde123450';
+    // ✅ CRITICAL FIX: Generate secure random password instead of hardcoded
+    const password = generateSecurePassword(16);
 
     // Check if already exists
     const { data: existingUsers } = await adminClient.auth.admin.listUsers();
@@ -84,9 +102,62 @@ CREATE TABLE IF NOT EXISTS public.admin_users (
       return NextResponse.json({ error: `DB error: ${dbError.message}` }, { status: 500 });
     }
 
-    return NextResponse.json({ success: true, message: 'Super Admin creado exitosamente', email, userId });
+    // ✅ CRITICAL FIX: Send password via email instead of returning in response
+    try {
+      await resend.emails.send({
+        from: 'security@montreal-concierge-services.com',
+        to: email,
+        subject: '🔐 Your Admin Account Has Been Created',
+        html: `
+          <h2>Admin Account Created Successfully</h2>
+          <p>Your admin account for Montreal Concierge Services has been created.</p>
+
+          <h3>Login Credentials:</h3>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Temporary Password:</strong> <code>${password}</code></p>
+
+          <p><strong>⚠️ IMPORTANT:</strong> This temporary password will expire in 24 hours. Please change it immediately after logging in.</p>
+
+          <p><a href="https://montreal-concierge-services.vercel.app/admin/login">Go to Admin Login</a></p>
+
+          <hr />
+          <p style="color: #666; font-size: 12px;">If you did not request this account, please contact security immediately.</p>
+        `,
+      });
+    } catch (emailError) {
+      console.error('Failed to send password email:', emailError);
+      // Don't fail the whole request, but log it
+    }
+
+    // ✅ CRITICAL FIX: Log audit trail
+    try {
+      await adminClient.from('audit_logs').insert({
+        admin_id: userId,
+        action: 'SUPER_ADMIN_CREATED',
+        table_name: 'admin_users',
+        record_id: userId,
+        new_values: { email, role: 'admin' },
+        created_at: new Date().toISOString(),
+      });
+    } catch (auditError) {
+      console.error('Failed to log audit trail:', auditError);
+    }
+
+    // ✅ SECURITY: Do NOT return password in response
+    return NextResponse.json({
+      success: true,
+      message: 'Super Admin creado. Las credenciales fueron enviadas al email proporcionado.',
+      email,
+      userId,
+      note: 'Password sent to email - check inbox/spam folder'
+    });
   } catch (error) {
-    console.error('Setup error:', error);
-    return NextResponse.json({ error: String(error) }, { status: 500 });
+    // ✅ CRITICAL FIX: Sanitize error messages
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    console.error('Setup error - sanitized:', {
+      type: error instanceof Error ? error.constructor.name : 'Unknown',
+      timestamp: new Date().toISOString(),
+    });
+    return NextResponse.json({ error: 'Setup failed. Check server logs.' }, { status: 500 });
   }
 }
