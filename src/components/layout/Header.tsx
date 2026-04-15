@@ -25,12 +25,24 @@ export default function Header() {
     router.replace(pathname as any, { locale: newLocale });
   };
 
+  const [locationsOpen, setLocationsOpen] = useState(false);
+
   const navLinks = [
     { href: '/' as const, label: t('home') },
     { href: '/services' as const, label: t('services') },
+    { href: '/locations' as const, label: 'Locations', hasDropdown: true },
     { href: '/about' as const, label: t('about') },
     { href: '/blog' as const, label: t('blog') },
     { href: '/contact' as const, label: t('contact') },
+  ];
+
+  const mainLocations = [
+    { slug: 'longueuil', name: 'Longueuil' },
+    { slug: 'brossard', name: 'Brossard' },
+    { slug: 'saint-jean-sur-richelieu', name: 'Saint-Jean-sur-Richelieu' },
+    { slug: 'greenfield-park', name: 'Greenfield Park' },
+    { slug: 'saint-lambert', name: 'Saint-Lambert' },
+    { slug: 'saint-bruno-de-montarville', name: 'Saint-Bruno-de-Montarville' },
   ];
 
   return (
@@ -118,15 +130,52 @@ export default function Header() {
           </Link>
 
           {/* Desktop navigation */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden lg:flex items-center gap-1 relative">
             {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`nav-link px-4 ${pathname === link.href ? 'active' : ''}`}
-              >
-                {link.label}
-              </Link>
+              <div key={link.href} className="relative group">
+                {link.hasDropdown ? (
+                  <>
+                    <button
+                      onClick={() => setLocationsOpen(!locationsOpen)}
+                      className="nav-link px-4 flex items-center gap-1"
+                    >
+                      {link.label}
+                      <svg className="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                      </svg>
+                    </button>
+                    {/* Dropdown menu */}
+                    <div className="absolute left-0 mt-0 w-56 bg-white rounded-lg shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 py-2">
+                      <div className="px-2 py-2">
+                        <p className="text-xs font-bold text-gray-500 px-3 py-2 mb-1">Popular Locations</p>
+                        {mainLocations.map((loc) => (
+                          <Link
+                            key={loc.slug}
+                            href={`/locations/${loc.slug}` as any}
+                            className="block px-3 py-2.5 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 rounded transition-colors"
+                          >
+                            {loc.name}
+                          </Link>
+                        ))}
+                        <hr className="my-2" />
+                        <Link
+                          href="/locations"
+                          className="block px-3 py-2.5 text-sm font-semibold text-blue-700 hover:bg-blue-50 rounded transition-colors"
+                        >
+                          View All Locations →
+                        </Link>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <Link
+                    href={link.href}
+                    className={`nav-link px-4 ${pathname === link.href ? 'active' : ''}`}
+                  >
+                    {link.label}
+                  </Link>
+                )}
+              </div>
             ))}
           </div>
 
@@ -208,22 +257,69 @@ export default function Header() {
               <div className="flex-1 overflow-y-auto px-4 py-6">
                 <div className="flex flex-col gap-2">
                   {navLinks.map((link, i) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      onClick={() => setMobileOpen(false)}
-                      className="flex items-center gap-3 px-4 py-3.5 rounded-xl font-semibold text-base transition-all"
-                      style={{
-                        color: pathname === link.href ? '#0a1a4e' : 'white',
-                        background: pathname === link.href ? 'rgba(0,192,212,0.2)' : 'rgba(255,255,255,0.08)',
-                        animationDelay: `${i * 0.04}s`,
-                      }}
-                    >
-                      {pathname === link.href && (
-                        <span className="w-1 h-4 rounded-full" style={{ background: '#00c0d4' }} />
+                    <div key={link.href}>
+                      {link.hasDropdown ? (
+                        <>
+                          <button
+                            onClick={() => setLocationsOpen(!locationsOpen)}
+                            className="w-full flex items-center gap-3 px-4 py-3.5 rounded-xl font-semibold text-base transition-all"
+                            style={{
+                              color: 'white',
+                              background: 'rgba(255,255,255,0.08)',
+                              animationDelay: `${i * 0.04}s`,
+                            }}
+                          >
+                            {link.label}
+                            <svg className={`w-4 h-4 transition-transform ${locationsOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                            </svg>
+                          </button>
+                          {locationsOpen && (
+                            <div className="ml-4 mt-1 flex flex-col gap-1 pb-2 border-l border-cyan-300/30 pl-4">
+                              {mainLocations.map((loc) => (
+                                <Link
+                                  key={loc.slug}
+                                  href={`/locations/${loc.slug}` as any}
+                                  onClick={() => {
+                                    setMobileOpen(false);
+                                    setLocationsOpen(false);
+                                  }}
+                                  className="py-2 text-sm text-white/80 hover:text-cyan-300 transition-colors"
+                                >
+                                  {loc.name}
+                                </Link>
+                              ))}
+                              <Link
+                                href="/locations"
+                                onClick={() => {
+                                  setMobileOpen(false);
+                                  setLocationsOpen(false);
+                                }}
+                                className="py-2 text-sm font-semibold text-cyan-300 hover:text-cyan-100 transition-colors"
+                              >
+                                View All Locations →
+                              </Link>
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <Link
+                          href={link.href}
+                          onClick={() => setMobileOpen(false)}
+                          className="flex items-center gap-3 px-4 py-3.5 rounded-xl font-semibold text-base transition-all"
+                          style={{
+                            color: pathname === link.href ? '#0a1a4e' : 'white',
+                            background: pathname === link.href ? 'rgba(0,192,212,0.2)' : 'rgba(255,255,255,0.08)',
+                            animationDelay: `${i * 0.04}s`,
+                          }}
+                        >
+                          {pathname === link.href && (
+                            <span className="w-1 h-4 rounded-full" style={{ background: '#00c0d4' }} />
+                          )}
+                          {link.label}
+                        </Link>
                       )}
-                      {link.label}
-                    </Link>
+                    </div>
                   ))}
                 </div>
               </div>

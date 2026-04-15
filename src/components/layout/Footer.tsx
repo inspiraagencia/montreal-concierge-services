@@ -1,6 +1,6 @@
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing';
-import { SITE_CONFIG, SERVICE_CATEGORIES, LOCATIONS_SERVED } from '@/lib/constants';
+import { SITE_CONFIG, SERVICE_CATEGORIES, LOCATIONS_SERVED, CITY_METADATA } from '@/lib/constants';
 import Image from 'next/image';
 
 export default function Footer() {
@@ -119,16 +119,32 @@ export default function Footer() {
               {t('footer.serviceAreas')}
             </h3>
             <ul className="space-y-2.5">
-              {displayLocations.map((city) => (
-                <li key={city} className="text-sm flex items-center gap-1.5" style={{ color: 'rgba(255,255,255,0.55)' }}>
-                  <svg className="w-3 h-3" style={{ color: '#00c0d4' }} fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
-                  </svg>
-                  {city}
-                </li>
-              ))}
-              <li className="text-sm font-medium" style={{ color: '#00c0d4' }}>
-                {locale === 'fr' ? `+ ${LOCATIONS_SERVED.length - 6} autres villes` : `+ ${LOCATIONS_SERVED.length - 6} more cities`}
+              {displayLocations.map((city) => {
+                const metadata = CITY_METADATA[city as keyof typeof CITY_METADATA];
+                if (!metadata) return null;
+                return (
+                  <li key={city}>
+                    <Link
+                      href={`/locations/${metadata.slug}` as any}
+                      className="text-sm flex items-center gap-1.5 transition-colors hover:opacity-100"
+                      style={{ color: 'rgba(255,255,255,0.55)' }}
+                    >
+                      <svg className="w-3 h-3" style={{ color: '#00c0d4' }} fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                      </svg>
+                      {city}
+                    </Link>
+                  </li>
+                );
+              })}
+              <li>
+                <Link
+                  href="/locations"
+                  className="text-sm font-medium transition-colors hover:opacity-100"
+                  style={{ color: '#00c0d4' }}
+                >
+                  {locale === 'fr' ? `+ ${LOCATIONS_SERVED.length - 6} autres villes` : `+ ${LOCATIONS_SERVED.length - 6} more cities`}
+                </Link>
               </li>
             </ul>
           </div>

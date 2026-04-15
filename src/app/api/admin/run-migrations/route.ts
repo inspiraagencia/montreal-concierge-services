@@ -84,9 +84,72 @@ async function getSqlMigrations() {
   }
 }
 
+// ✅ CRITICAL FIX: Add mandatory authentication check
+async function verifyAdminAuth(request: NextRequest) {
+  const authHeader = request.headers.get('authorization');
+  const supabase = createClient(supabaseUrl, serviceRoleKey);
+
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return null;
+  }
+
+  const token = authHeader.substring(7);
+
+  try {
+    const { data: { user }, error } = await supabase.auth.getUser(token);
+    if (error || !user) return null;
+
+    // Verify user is admin
+    const { data: adminUser } = await supabase
+      .from('admin_users')
+      .select('role, is_active')
+      .eq('id', user.id)
+      .single();
+
+    if (!adminUser || adminUser.role !== 'admin' || !adminUser.is_active) {
+      return null;
+    }
+
+    return user;
+  } catch {
+    return null;
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
+    // ✅ CRITICAL FIX: Verify admin authentication BEFORE processing
+    const adminUser = await verifyAdminAuth(request);
+    if (!adminUser) {
+      return NextResponse.json(
+        { error: 'Unauthorized. Admin authentication required.' },
+        { status: 401 }
+      );
+    }
+
     const { action } = await request.json().catch(() => ({ action: 'get-sql' }));
+
+    // ✅ CRITICAL FIX: Whitelist allowed actions
+    const ALLOWED_ACTIONS = ['get-sql', 'verify'];
+    if (!ALLOWED_ACTIONS.includes(action)) {
+      return NextResponse.json(
+        { error: 'Invalid action' },
+        { status: 400 }
+      );
+    }
+
+    // ✅ CRITICAL FIX: Audit log all migration operations
+    const auditClient = createClient(supabaseUrl, serviceRoleKey);
+    try {
+      await auditClient.from('audit_logs').insert({
+        admin_id: adminUser.id,
+        action: `MIGRATION_${action.toUpperCase()}`,
+        table_name: 'migrations',
+        created_at: new Date().toISOString(),
+      });
+    } catch (err) {
+      console.error('Audit log failed:', err);
+    }
 
     if (action === 'get-sql') {
       const sql = await getSqlMigrations();

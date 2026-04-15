@@ -3,7 +3,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
-import { SITE_CONFIG } from '@/lib/constants';
+import { SITE_CONFIG, LOCATIONS_SERVED } from '@/lib/constants';
 import '@/styles/globals.css';
 
 type Props = {
@@ -85,15 +85,7 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
     priceRange: '$$',
     areaServed: [
       { '@type': 'City', name: 'Montréal' },
-      { '@type': 'City', name: 'Longueuil' },
-      { '@type': 'City', name: 'Brossard' },
-      { '@type': 'City', name: 'Repentigny' },
-      { '@type': 'City', name: 'Terrebonne' },
-      { '@type': 'City', name: 'Saint-Jean-sur-Richelieu' },
-      { '@type': 'City', name: 'Boucherville' },
-      { '@type': 'City', name: 'Varennes' },
-      { '@type': 'City', name: 'Chambly' },
-      { '@type': 'City', name: 'La Prairie' },
+      ...LOCATIONS_SERVED.map(city => ({ '@type': 'City' as const, name: city })),
     ],
     serviceType: [
       'Concierge Service',

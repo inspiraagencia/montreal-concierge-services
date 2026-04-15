@@ -23,6 +23,14 @@ export const routing = defineRouting({
       en: '/blog/[slug]',
       fr: '/blogue/[slug]',
     },
+    '/locations': {
+      en: '/locations',
+      fr: '/emplacements',
+    },
+    '/locations/[city]': {
+      en: '/locations/[city]',
+      fr: '/emplacements/[city]',
+    },
     '/contact': {
       en: '/contact',
       fr: '/contact',

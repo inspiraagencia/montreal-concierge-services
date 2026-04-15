@@ -1,0 +1,49 @@
+# Montreal Concierge Services - SEO Robots Configuration
+# Last Updated: April 15, 2026
+
+# Default rules for all crawlers
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api
+Disallow: /_next
+Disallow: /.next
+Disallow: /node_modules
+Disallow: /*.json
+Crawl-delay: 0
+Request-rate: 1/1s
+
+# Google specific rules
+User-agent: Googlebot
+Allow: /
+Disallow: /admin
+Disallow: /api
+Allow: /_next/static/
+Allow: /images/
+
+# Bing specific rules
+User-agent: Bingbot
+Allow: /
+Disallow: /admin
+Disallow: /api
+
+# Other search engines
+User-agent: Slurp
+Allow: /
+Disallow: /admin
+Disallow: /api
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /admin
+Disallow: /api
+
+# Prevent indexing of test/staging environments (if applicable)
+User-agent: *
+Disallow: /test
+Disallow: /staging
+
+# Sitemap location
+Sitemap: https://montrealconciergeservices.com/sitemap.xml
+Sitemap: https://montrealconciergeservices.com/en/sitemap.xml
+Sitemap: https://montrealconciergeservices.com/fr/sitemap.xml
